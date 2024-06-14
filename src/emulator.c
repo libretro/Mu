@@ -99,6 +99,23 @@ static void patchOsRom(uint32_t address, char* patch){
       swap16BufferIfLittle(&palmRom[swapBegin], swapSize);
 }
 
+/**
+ * Fills the initial RAM with garbage.
+ *
+ * @param ram The RAM to fill.
+ * @param size The size of RAM.
+ * @since 2024/06/14
+ */
+void mu_garbage_fill(uint8_t* ram, uint32_t size) {
+  uint32_t i;
+  uint8_t vis;
+
+  vis = 179;
+  for (i = 0; i < size; i++) {
+    ram[i] = vis;
+    vis = ((vis << 1) | ((vis >> 7) & 1)) ^ 0xFF;
+  }
+}
 
 uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t* palmRomData, uint32_t palmRomSize, uint8_t* palmBootloaderData, uint32_t palmBootloaderSize, bool syncRtc, bool allowInvalidBehavior){
    if(emulatorInitialized)
@@ -173,7 +190,9 @@ uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t* palmRomData, uint32_t pal
 
       //allocate buffers, add 4 to memory regions to prevent SIGSEGV from accessing off the end
       palmRom = malloc(M5XX_ROM_SIZE + 4);
-      palmRam = malloc((palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE) + 4);
+
+      palmRam = malloc((emulatorGetRamSize()) + 4);
+
       palmFramebuffer = malloc(160 * 220 * sizeof(uint16_t));
       palmAudio = malloc(AUDIO_SAMPLES_PER_FRAME * 2 * sizeof(int16_t));
       palmAudioResampler = blip_new(AUDIO_SAMPLE_RATE);//have 1 second of samples
@@ -191,7 +210,10 @@ uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t* palmRomData, uint32_t pal
       if(palmRomSize < M5XX_ROM_SIZE)
          memset(palmRom + palmRomSize, 0x00, M5XX_ROM_SIZE - palmRomSize);
       swap16BufferIfLittle(palmRom, M5XX_ROM_SIZE / sizeof(uint16_t));
-      memset(palmRam, 0x00, palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE);
+
+      memset(palmRam, 0x00, emulatorGetRamSize());
+      mu_garbage_fill(palmRam, emulatorGetRamSize());
+
       dbvzLoadBootloader(palmBootloaderData, palmBootloaderSize);
       memcpy(palmFramebuffer + 160 * 160, silkscreen160x60, 160 * 60 * sizeof(uint16_t));
       memset(palmAudio, 0x00, AUDIO_SAMPLES_PER_FRAME * 2/*channels*/ * sizeof(int16_t));
@@ -262,7 +284,7 @@ void emulatorHardReset(void){
    }
    else{
 #endif
-      memset(palmRam, 0x00, palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE);
+      memset(palmRam, 0x00, emulatorGetRamSize());
       emulatorSoftReset();
       sdCardReset();
       dbvzSetRtc(0, 0, 0, 0);
@@ -330,7 +352,7 @@ uint32_t emulatorGetStateSize(void){
          size += sed1376StateSize();
       size += ads7846StateSize();
       size += pdiUsbD12StateSize();
-      size += palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE;//system RAM buffer
+      size += emulatorGetRamSize();//system RAM buffer
 #if defined(EMU_SUPPORT_PALM_OS5)
    }
 #endif
@@ -402,9 +424,9 @@ bool emulatorSaveState(uint8_t* data, uint32_t size){
       offset += pdiUsbD12StateSize();
 
       //memory
-      memcpy(data + offset, palmRam, palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE);
-      swap16BufferIfLittle(data + offset, (palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE) / sizeof(uint16_t));
-      offset += palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE;
+      memcpy(data + offset, palmRam, emulatorGetRamSize());
+      swap16BufferIfLittle(data + offset, (emulatorGetRamSize()) / sizeof(uint16_t));
+      offset += emulatorGetRamSize();
 #if defined(EMU_SUPPORT_PALM_OS5)
    }
 #endif
@@ -526,9 +548,9 @@ bool emulatorLoadState(uint8_t* data, uint32_t size){
       offset += pdiUsbD12StateSize();
 
       //memory
-      memcpy(palmRam, data + offset, palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE);
-      swap16BufferIfLittle(palmRam, (palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE) / sizeof(uint16_t));
-      offset += palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE;
+      memcpy(palmRam, data + offset, emulatorGetRamSize());
+      swap16BufferIfLittle(palmRam, (emulatorGetRamSize()) / sizeof(uint16_t));
+      offset += emulatorGetRamSize();
 #if defined(EMU_SUPPORT_PALM_OS5)
    }
 #endif
@@ -608,7 +630,9 @@ uint32_t emulatorGetRamSize(void){
    if(palmEmulatingTungstenT3)
       return TUNGSTEN_T3_RAM_SIZE;
 #endif
-   return palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE;
+   if (palmEmulatingM500)
+      return M500_RAM_SIZE;
+   return M515_RAM_SIZE;
 }
 
 bool emulatorSaveRam(uint8_t* data, uint32_t size){
@@ -621,11 +645,11 @@ bool emulatorSaveRam(uint8_t* data, uint32_t size){
    }
    else{
 #endif
-      if(size < (palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE))
+      if(size < (emulatorGetRamSize()))
          return false;
 
-      memcpy(data, palmRam, palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE);
-      swap16BufferIfLittle(data, (palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE) / sizeof(uint16_t));
+      memcpy(data, palmRam, emulatorGetRamSize());
+      swap16BufferIfLittle(data, (emulatorGetRamSize()) / sizeof(uint16_t));
 #if defined(EMU_SUPPORT_PALM_OS5)
    }
 #endif
@@ -643,11 +667,11 @@ bool emulatorLoadRam(uint8_t* data, uint32_t size){
    }
    else{
 #endif
-      if(size < (palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE))
+      if(size < (emulatorGetRamSize()))
          return false;
 
-      memcpy(palmRam, data, palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE);
-      swap16BufferIfLittle(palmRam, (palmEmulatingM500 ? M500_RAM_SIZE : M515_RAM_SIZE) / sizeof(uint16_t));
+      memcpy(palmRam, data, emulatorGetRamSize());
+      swap16BufferIfLittle(palmRam, (emulatorGetRamSize()) / sizeof(uint16_t));
 #if defined(EMU_SUPPORT_PALM_OS5)
    }
 #endif

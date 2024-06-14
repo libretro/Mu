@@ -32,6 +32,11 @@ if(CMAKE_SYSTEM_NAME STREQUAL Windows)
 		set(MU_LIBRETRO_DIR "$ENV{APPDATA}/RetroArch")
 	endif()
 else()
+	find_program(RETROARCH_APP retroarch)
+	if(RETROARCH_APP)
+		get_filename_component(MU_LIBRETRO_DIR "${RETROARCH_APP}" DIRECTORY)
+	endif()
+
 	set(MU_LIBRETRO_EXTENSION "")
 endif()
 

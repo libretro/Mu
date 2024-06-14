@@ -712,12 +712,16 @@ bool retro_load_game(const struct retro_game_info *info){
    strlcat(saveRamPath, osVersion, PATH_MAX_LENGTH);
    strlcat(saveRamPath, ".ram", PATH_MAX_LENGTH);
    saveRamFile = filestream_open(saveRamPath, RETRO_VFS_FILE_ACCESS_READ, RETRO_VFS_FILE_ACCESS_HINT_NONE);
-   if(saveRamFile){
-      hasSram = true;
+
+   // There is now always SRAM because it gets initialized to garbage
+   hasSram = true;
+
+   if(saveRamFile) {
       if(filestream_get_size(saveRamFile) == emulatorGetRamSize()){
          filestream_read(saveRamFile, palmRam, emulatorGetRamSize());
          swap16BufferIfLittle(palmRam, emulatorGetRamSize() / sizeof(uint16_t));
       }
+
       filestream_close(saveRamFile);
    }
    
