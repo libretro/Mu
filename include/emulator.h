@@ -45,13 +45,15 @@ static void debugLog(char* str, ...){};
 //config options
 #define EMU_FPS 60
 #define DBVZ_SYSCLK_PRECISION 2000000//the amount of cycles to run before adding SYSCLKs, higher = faster, higher values may skip timer events and lower audio accuracy
+
 #define AUDIO_SAMPLE_RATE 48000
+#define AUDIO_SAMPLES_PER_FRAME (AUDIO_SAMPLE_RATE / EMU_FPS)
+
 #define AUDIO_SPEAKER_RANGE 0x6000//prevent hitting the top or bottom of the speaker when switching direction rapidly
 #define SD_CARD_NCR_BYTES 1//how many 0xFF bytes come before the R1 response
 #define SAVE_STATE_VERSION 0x00000001
 
 //shared constants
-#define AUDIO_SAMPLES_PER_FRAME (AUDIO_SAMPLE_RATE / EMU_FPS)
 #define SD_CARD_BLOCK_SIZE 512//all newer SDSC cards have this fixed at 512
 #define SD_CARD_BLOCK_DATA_PACKET_SIZE (1 + SD_CARD_BLOCK_SIZE + 2)
 #define SD_CARD_RESPONSE_FIFO_SIZE (SD_CARD_BLOCK_DATA_PACKET_SIZE * 3)
