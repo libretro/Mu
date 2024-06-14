@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget* parent) :
    stateManager = new StateManager(this);
    emuDebugger = new DebugViewer(this);
    refreshDisplay = new QTimer(this);
+
    audioDevice = new QAudioOutput(format, this);
    audioOut = audioDevice->start();
 
@@ -226,7 +227,10 @@ void MainWindow::updateDisplay(){
       ui->display->repaint();
 
       //audio
-      audioOut->write((const char*)emu.getAudioSamples(), AUDIO_SAMPLES_PER_FRAME * 2/*channels*/ * sizeof(int16_t));
+      if (audioOut != NULL) {
+        audioOut->write((const char*)emu.getAudioSamples(),
+          AUDIO_SAMPLES_PER_FRAME * 2/*channels*/ * sizeof(int16_t));
+      }
 
       //power LED
       ui->powerButtonLed->setStyleSheet(emu.getPowerButtonLed() ? "background: lime" : "");
