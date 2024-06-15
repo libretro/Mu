@@ -333,7 +333,14 @@ void MainWindow::on_center_released(){
 void MainWindow::on_ctrlBtn_clicked(){
    if(!emu.isInited()){
       QString sysDir = settings->value("resourceDirectory", "").toString();
-      uint32_t error = emu.init(sysDir, settings->value("palmOsVersionString", "Palm m515/Palm OS 4.1").toString(), settings->value("featureSyncedRtc", false).toBool(), settings->value("featureDurable", false).toBool(), settings->value("fastBoot", false).toBool());
+      uint32_t error = emu.init(
+          sysDir,
+          settings->value("palmOsVersionString", "Palm m515/Palm OS 4.1")
+              .toString(),
+          settings->value("featureSyncedRtc", false).toBool(),
+          settings->value("featureDurable", false).toBool(),
+          settings->value("fastBoot", false).toBool(),
+          settings->value("serialPortDev", "").toString());
 
       if(error == EMU_ERROR_NONE){
          emu.setCpuSpeed(settings->value("cpuSpeed", 1.00).toDouble());

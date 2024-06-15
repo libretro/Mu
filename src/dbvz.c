@@ -475,17 +475,26 @@ uint8_t dbvzGetRegister8(uint32_t address){
          //PDSEL lacks the bottom 4 bits but that is handled on write
          return registerArrayRead8(address);
 
+      case URX1:
+      case URX1 + 1:
+      case URX2:
+      case URX2 + 1:
+        return registerArrayRead16(address);
+
       default:
+        printHwRegAccess(address, 0, 8, false);
+
          //bootloader
          if(address >= 0xE00)
             return registerArrayRead8(address);
 
-         printHwRegAccess(address, 0, 8, false);
          return 0x00;
    }
 }
 
 uint16_t dbvzGetRegister16(uint32_t address){
+  uint16_t bit;
+
 #if !defined(EMU_NO_SAFETY)
    if((address & 0x0000F000) != 0x0000F000){
       dbvzSetBusErrorTimeOut(address, false);
@@ -520,6 +529,16 @@ uint16_t dbvzGetRegister16(uint32_t address){
          }
 
       case UTX1:{
+#if defined(EMU_DEBUG)
+            printHwRegAccess(address, 0, 16, false);
+#endif
+            uint16_t dataFlag = 0;
+            if (palmIrDataSize != NULL)
+              if (palmIrDataSize() > 0) {
+                dataFlag = 0x4000;  // byte swapped
+                updateUart1Interrupt();
+              }
+
             uint16_t uart1TxStatus = registerArrayRead16(UTX1);
             uint8_t entrys = uart1TxFifoEntrys();
 
@@ -527,10 +546,20 @@ uint16_t dbvzGetRegister16(uint32_t address){
             uart1TxStatus |= (entrys < 4) << 14;
             uart1TxStatus |= (entrys < 8) << 13;
 
-            return uart1TxStatus;
+            return uart1TxStatus | dataFlag;
          }
 
       case UTX2:{
+#if defined(EMU_DEBUG)
+            printHwRegAccess(address, 0, 16, false);
+#endif
+            uint16_t dataFlag = 0;
+            if (palmSerialDataSize != NULL)
+              if (palmSerialDataSize() > 0) {
+                dataFlag = 0x4000;  // byte swapped
+                updateUart2Interrupt();
+              }
+
             uint16_t uart2TxStatus = registerArrayRead16(UTX2);
             uint8_t entrys = uart2TxFifoEntrys();
 
@@ -538,7 +567,7 @@ uint16_t dbvzGetRegister16(uint32_t address){
             uart2TxStatus |= (entrys < 4) << 14;
             uart2TxStatus |= (entrys < 8) << 13;
 
-            return uart2TxStatus;
+            return uart2TxStatus | dataFlag;
          }
 
       case PLLFSR:
@@ -599,11 +628,12 @@ uint16_t dbvzGetRegister16(uint32_t address){
          return registerArrayRead16(address);
 
       default:
+         printHwRegAccess(address, 0, 16, false);
+
          //bootloader
          if(address >= 0xE00)
             return registerArrayRead16(address);
 
-         printHwRegAccess(address, 0, 16, false);
          return 0x0000;
    }
 }
@@ -668,6 +698,7 @@ void dbvzSetRegister8(uint32_t address, uint8_t value){
          if((registerArrayRead16(USTCNT2) & 0xA000) == 0xA000){
             uart2TxFifoWrite(value);
             updateUart2Interrupt();
+            updateUart2PortState();
          }
          return;
 
@@ -1128,6 +1159,7 @@ void dbvzSetRegister16(uint32_t address, uint16_t value){
          if((registerArrayRead16(USTCNT2) & 0xA000) == 0xA000){
             uart2TxFifoWrite(value & 0x1000 ? value & 0xFF : EMU_SERIAL_BREAK);
             updateUart2Interrupt();
+            updateUart2PortState();
          }
          return;
 

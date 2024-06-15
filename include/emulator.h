@@ -109,7 +109,7 @@ enum{
 };
 
 //types
-typedef struct{
+typedef struct {
    bool     enable;
    bool     enableParity;
    bool     oddParity;
@@ -215,7 +215,11 @@ extern void      (*palmSerialDataFlush)(void);//called by the emulator to delete
 extern void      (*palmGetRtcFromHost)(uint8_t* writeBack);//[0] = hours, [1] = minutes, [2] = seconds
 
 //functions
-uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t* palmRomData, uint32_t palmRomSize, uint8_t* palmBootloaderData, uint32_t palmBootloaderSize, bool syncRtc, bool allowInvalidBehavior);
+uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t *palmRomData,
+                      uint32_t palmRomSize, uint8_t *palmBootloaderData,
+                      uint32_t palmBootloaderSize, bool syncRtc,
+                      bool allowInvalidBehavior, const char *serialPortDev);
+
 void emulatorDeinit(void);
 void emulatorHardReset(void);
 void emulatorSoftReset(void);

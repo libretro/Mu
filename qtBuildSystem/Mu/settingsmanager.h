@@ -51,6 +51,8 @@ private slots:
    void on_cpuSpeed_valueChanged(double arg1);
    void on_palmOsVersion_currentIndexChanged(int index);
 
+   void on_serialPortDev_textChanged(const QString& arg1);
+
 private:
    Ui::SettingsManager* ui;
    QSettings*           settings;

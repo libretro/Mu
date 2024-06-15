@@ -11,6 +11,7 @@
 #include "ads7846.h"
 #include "pdiUsbD12.h"
 #include "sdCard.h"
+#include "serial.h"
 #include "silkscreen.h"
 #include "portability.h"
 #if defined(EMU_SUPPORT_PALM_OS5)
@@ -117,7 +118,10 @@ void mu_garbage_fill(uint8_t* ram, uint32_t size) {
   }
 }
 
-uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t* palmRomData, uint32_t palmRomSize, uint8_t* palmBootloaderData, uint32_t palmBootloaderSize, bool syncRtc, bool allowInvalidBehavior){
+uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t *palmRomData,
+                      uint32_t palmRomSize, uint8_t *palmBootloaderData,
+                      uint32_t palmBootloaderSize, bool syncRtc,
+                      bool allowInvalidBehavior, const char *serialPortDev) {
    if(emulatorInitialized)
       return EMU_ERROR_RESOURCE_LOCKED;
 
@@ -132,12 +136,18 @@ uint32_t emulatorInit(uint8_t emulatedDevice, uint8_t* palmRomData, uint32_t pal
    palmIrDataReceive = NULL;
    palmIrDataSend = NULL;
    palmIrDataFlush = NULL;
-   palmSerialSetPortProperties = NULL;
-   palmSerialDataSize = NULL;
-   palmSerialDataReceive = NULL;
-   palmSerialDataSend = NULL;
-   palmSerialDataFlush = NULL;
    palmGetRtcFromHost = NULL;
+
+  // Setup serial port
+  palmSerialSetPortProperties = NULL;
+  palmSerialDataSize = NULL;
+  palmSerialDataReceive = NULL;
+  palmSerialDataSend = NULL;
+  palmSerialDataFlush = NULL;
+
+  if (serialPortDev != NULL) {
+    mu_serial_open_and_init(serialPortDev);
+  }
 
 #if defined(EMU_SUPPORT_PALM_OS5)
    palmEmulatingTungstenT3 = emulatedDevice == EMU_DEVICE_TUNGSTEN_T3;

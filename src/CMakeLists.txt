@@ -3,6 +3,7 @@ add_library(MuCore STATIC
 	ads7846.c
 	dbvz.c
 	emulator.c
+	serial.c
 	flx68000.c
 	m5XXBus.c
 	pdiUsbD12.c

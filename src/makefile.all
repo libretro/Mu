@@ -1,5 +1,6 @@
 EMU_DEFINES :=
 EMU_SOURCES_C := $(EMU_PATH)/emulator.c \
+    $(EMU_PATH)/serial.c \
 	$(EMU_PATH)/m5XXBus.c \
 	$(EMU_PATH)/dbvz.c \
 	$(EMU_PATH)/flx68000.c \
