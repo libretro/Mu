@@ -17,6 +17,10 @@ message("that you are resting well.")
 message(" -- Your friend, Stephanie")
 message("******************************")
 
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	add_compile_definitions(EMU_DEBUG=1)
+endif()
+
 # Main project sources
 add_subdirectory(src)
 

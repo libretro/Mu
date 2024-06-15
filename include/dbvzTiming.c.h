@@ -404,6 +404,9 @@ static void dbvzEndClk32(void){
    updateUart1Interrupt();
    updateUart2Interrupt();
 
+   updateUart1PortState();
+   updateUart2PortState();
+
    checkInterrupts();
 }
 

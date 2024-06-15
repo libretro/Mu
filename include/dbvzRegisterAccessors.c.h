@@ -710,6 +710,7 @@ static void setUstcnt2(uint16_t value){
 
    registerArrayWrite16(USTCNT2, value);
    updateUart2Interrupt();
+   updateUart2PortState();
 }
 
 static void setTstat1(uint16_t value){

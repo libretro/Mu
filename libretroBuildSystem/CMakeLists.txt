@@ -14,6 +14,10 @@ add_library(mu_libretro SHARED
 # Remove the "lib" prefix always, RetroArch does not name in this way
 set_target_properties(mu_libretro PROPERTIES PREFIX "")
 
+# Define these
+target_compile_definitions(mu_libretro PUBLIC
+	__LIBRETRO__=1)
+
 # Bring all the sub-modules as needed
 target_link_libraries(mu_libretro
 	MuCore)

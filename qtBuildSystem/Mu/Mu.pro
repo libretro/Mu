@@ -221,6 +221,7 @@ SOURCES += \
     ../../src/audio/blip_buf.c \
     ../../src/dbvz.c \
     ../../src/emulator.c \
+    ../../src/serial.c \
     ../../src/fileLauncher/launcher.c \
     ../../src/flx68000.c \
     ../../src/m5XXBus.c \

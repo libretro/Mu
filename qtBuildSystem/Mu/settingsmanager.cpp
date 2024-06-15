@@ -31,6 +31,10 @@ SettingsManager::SettingsManager(QWidget* parent) :
    ui->featureSyncedRtc->setChecked(settings->value("featureSyncedRtc", false).toBool());
    ui->featureDurable->setChecked(settings->value("featureDurable", false).toBool());
 
+   ui->serialPortDev->setText(settings->value("serialPortDev",
+      "").toString());
+   connect(ui->serialPortDev, &QLineEdit::textChanged, this, &SettingsManager::on_serialPortDev_textChanged);
+
    setKeySelectorState(-1);
    updateButtonKeys();
 }
@@ -165,4 +169,8 @@ void SettingsManager::on_cpuSpeed_valueChanged(double arg1){
 void SettingsManager::on_palmOsVersion_currentIndexChanged(int index){
    settings->setValue("palmOsVersionIndex", index);
    settings->setValue("palmOsVersionString", ui->palmOsVersion->itemText(index));
+}
+
+void SettingsManager::on_serialPortDev_textChanged(const QString& arg1) {
+  settings->setValue("serialPortDev", ui->serialPortDev->text());
 }

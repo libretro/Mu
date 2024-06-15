@@ -54,7 +54,9 @@ public:
    EmuWrapper();
    ~EmuWrapper();
 
-   uint32_t init(const QString& assetPath, const QString& osVersion, bool syncRtc = false, bool allowInvalidBehavior = false, bool fastBoot = false);
+   uint32_t init(const QString &assetPath, const QString &osVersion,
+                 bool syncRtc = false, bool allowInvalidBehavior = false,
+                 bool fastBoot = false, const QString &serialPortDev = "");
    void exit();
    void pause();
    void resume();
