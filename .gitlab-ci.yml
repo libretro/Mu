@@ -12,93 +12,90 @@
 
 # Inclusion templates, required for the build to work
 include:
-  ################################## DESKTOPS ################################
-  # Windows 64-bit
   - project: 'libretro-infrastructure/ci-templates'
-    file: '/windows-x64-mingw.yml'
-    
-  # Windows 32-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/windows-i686-mingw.yml'
-
-  # Windows msvc10 64-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/windows-x64-msvc10-msys2.yml'
-
-  # Windows msvc10 32-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/windows-i686-msvc10-msys2.yml'
-
-  # Windows msvc05 32-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/windows-i686-msvc05-msys2.yml'
-    
-  # Linux 64-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/linux-x64.yml'
-
-  # MacOS 64-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/osx-x64.yml'
-  
-  # MacOS ARM 64-bit
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/osx-arm64.yml'
-
-  ################################## CELLULAR ################################
-  # Android
+    file: '/android-cmake.yml'
   - project: 'libretro-infrastructure/ci-templates'
     file: '/android-jni.yml'
-
-  # iOS 9
   - project: 'libretro-infrastructure/ci-templates'
-    file: '/ios9.yml'
-
-  # iOS
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/ios-arm64.yml'
-
-  # tvOS
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/tvos-arm64.yml'
-
-  ################################## CONSOLES ################################
-  # Dingux (GCW Zero)
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/dingux-mips32.yml'
-
-  # Nintendo 3DS
+    file: '/ctr-static-cmake.yml'
   - project: 'libretro-infrastructure/ci-templates'
     file: '/ctr-static.yml'
-
-  # Nintendo GameCube
   - project: 'libretro-infrastructure/ci-templates'
-    file: '/ngc-static.yml'
-    
-  # Nintendo Wii
+    file: '/dingux-cmake.yml'
   - project: 'libretro-infrastructure/ci-templates'
-    file: '/wii-static.yml'
-
-  # Nintendo WiiU
+    file: '/dingux-mips32.yml'
   - project: 'libretro-infrastructure/ci-templates'
-    file: '/wiiu-static.yml'
-
-  # Nintendo Switch
+    file: '/djgpp-static-cmake.yml'
   - project: 'libretro-infrastructure/ci-templates'
-    file: '/libnx-static.yml'
-
-  # PLayStation 2
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/ps2-static.yml'
-
-  # PlayStation Vita
-  - project: 'libretro-infrastructure/ci-templates'
-    file: '/vita-static.yml'
-
-  #################################### MISC ##################################
-  # Emscripten
+    file: '/emscripten-static-cmake.yml'
   - project: 'libretro-infrastructure/ci-templates'
     file: '/emscripten-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ios-arm64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ios-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ios9.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/libnx-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/libnx-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/linux-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/linux-x64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ngc-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ngc-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/orbis-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/osx-arm64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/osx-cmake-arm64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/osx-cmake-ppc.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/osx-cmake-x86.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/osx-x64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ps2-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/ps2-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/psp-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/tvos-arm64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/tvos-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/vita-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/vita-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/wii-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/wii-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/wiiu-static-cmake.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/wiiu-static.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-cmake-mingw.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-cmake-msvc19.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-i686-mingw.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-i686-msvc05-msys2.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-i686-msvc10-msys2.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-x64-mingw.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/windows-x64-msvc10-msys2.yml'
 
 # Stages for building
 stages:
@@ -140,7 +137,13 @@ libretro-build-windows-msvc05-i686:
   extends:
     - .libretro-windows-i686-msvc05-msys2-make-default
     - .core-defs
-    
+
+# linux-cmake.yml
+libretro-build-linux-i686:
+  extends:
+    - .libretro-linux-cmake-x86
+    - .core-nanocoat
+
 # Linux 64-bit
 libretro-build-linux-x64:
   extends:
@@ -157,6 +160,18 @@ libretro-build-osx-x64:
 libretro-build-osx-arm64:
   extends:
     - .libretro-osx-arm64-make-default
+    - .core-defs
+
+# osx-cmake-ppc.yml
+libretro-build-osx-ppc:
+  extends:
+    - .libretro-osx-cmake-ppc
+    - .core-defs
+
+# osx-cmake-x86.yml
+libretro-build-osx-x86: # TODO: What should this be called?
+  extends:
+    - .libretro-osx-cmake-x86
     - .core-defs
 
 ################################### CELLULAR #################################
@@ -245,6 +260,12 @@ libretro-build-ps2:
     - .libretro-ps2-static-retroarch-master
     - .core-defs
 
+# psp-static-cmake.yml
+libretro-build-psp:
+  extends:
+    - .libretro-psp-static-cmake-retroarch-master
+    - .core-nanocoat
+
 # PlayStation Vita
 libretro-build-vita:
   extends:
@@ -256,4 +277,30 @@ libretro-build-vita:
 libretro-build-emscripten:
   extends:
     - .libretro-emscripten-static-retroarch-master
+    - .core-defs
+
+libretro-build-dingux-odbeta-mips32:
+  extends:
+    - .libretro-dingux-odbeta-cmake-mips32
+    - .core-defs
+
+libretro-build-miyoo-arm32:
+  extends:
+    - .libretro-miyoo-cmake-arm32
+    - .core-defs
+
+libretro-build-retrofw-mips32:
+  extends:
+    - .libretro-retrofw-odbeta-cmake-mips32
+    - .core-defs
+
+libretro-build-rs90-odbeta-mips32:
+  extends:
+    - .libretro-rs90-odbeta-cmake-mips32
+    - .core-defs
+
+# djgpp-static-cmake.yml
+libretro-build-djgpp: # TODO: What should this be called?
+  extends:
+    - .libretro-djgpp-static-cmake-retroarch-master
     - .core-defs
