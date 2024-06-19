@@ -142,7 +142,7 @@ libretro-build-windows-msvc05-i686:
 libretro-build-linux-i686:
   extends:
     - .libretro-linux-cmake-x86
-    - .core-nanocoat
+    - .core-defs
 
 # Linux 64-bit
 libretro-build-linux-x64:
@@ -264,7 +264,7 @@ libretro-build-ps2:
 libretro-build-psp:
   extends:
     - .libretro-psp-static-cmake-retroarch-master
-    - .core-nanocoat
+    - .core-defs
 
 # PlayStation Vita
 libretro-build-vita:

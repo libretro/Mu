@@ -1,9 +1,9 @@
 # Mu, a Palm OS Emulator
 
-The continuation of the Mu along with the RetroArch Core is dedicated to
+> The continuation of the Mu along with the RetroArch Core is dedicated to
 Emily (1998-2020), your friendship was very important to me and I hope
 that you are resting well.
- -- Your friend, Stephanie
+> -- _Your friend, Stephanie_
 
 # The goal of this project
 
@@ -38,6 +38,12 @@ https://findicons.com/icon/164302/cursor (Libretro Port Joystick Cursor)
 
 ## Building
 
+For systems supported by RetroArch, you may download builds
+directly from and install them manually, if not using the
+_Online Updater_ functionality:
+
+ * <https://git.libretro.com/libretro/Mu/-/pipelines>
+
 #### Using CMake
 
 Using CMake, you just need to do:
@@ -47,6 +53,21 @@ Using CMake, you just need to do:
    * You may specify a CMake target.
 
 #### For RetroArch
+
+There are two options available for RetroArch, you can use CMake
+to build the core, or you can use the older Makefile based setup.
+The Makefile based setup is for the older RetroArch build system.
+
+##### CMake
+
+Same as above for _CMake_, the RetroArch specific target is
+in this case `mu_libretro`. This will output a file accordingly.
+Note that if you are using a system which uses static binaries,
+such as the PS2 or 3DS, there are other steps you must complete,
+although it is recommended to just download from
+here <https://git.libretro.com/libretro/Mu/-/pipelines>.
+
+##### Makefile 
 
 Make sure you have done all the steps here https://docs.libretro.com/ under "For Developers/Compilation" so you build environment works.  
 
@@ -58,7 +79,7 @@ load that ZIP file. PDBs will be installed first followed by PRC files.
 
 #### For Qt
 
-First install _Qt 5.14.2_, you may optional install as well _Qt Creator_.
+First install _Qt 5.14.2_, you may optionally install as well _Qt Creator_.
 
  * Windows: <https://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-windows-x86-5.14.2.exe>
  * Mac: <https://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-mac-x64-5.14.2.dmg>
@@ -94,26 +115,42 @@ Install prc-tools from the below link(self compiled or prepackaged VM)
     ./make.sh
 
 ## Running
+
 #### Files
-palmos40-en-m500.rom: f50e4d5e4d98dc831f2c34a9107651eb (MD5)  
-palmos41-en-m515.rom: 83cb1d1c76e568b916dc2e7c0bf669f6 (MD5)  
-palmos52-en-t3.rom: de46ec84d9aabf655eabdf9b00a3845d (MD5)   
-bootloader-dbvz.rom: 9da101cd2317830649a31f8fa46debec (MD5)  
+
+ * `palmos40-en-m500.rom`:
+   * `f50e4d5e4d98dc831f2c34a9107651eb` (MD5)  
+ * `palmos41-en-m515.rom`:
+   * `83cb1d1c76e568b916dc2e7c0bf669f6` (MD5)  
+ * `palmos52-en-t3.rom`:
+   * `de46ec84d9aabf655eabdf9b00a3845d` (MD5)   
+ * `bootloader-dbvz.rom`:
+   * `9da101cd2317830649a31f8fa46debec` (MD5)  
 
 #### For Qt
+
  1. Run once to create the directory tree
  2. Copy "palmos41-en-m515.rom" and "palmos52-en-t3.rom" to "~/Mu"
  3. (Optional)Copy "bootloader-en-m515.rom" to "~/Mu"
  4. Run emu and press start button
 
 #### For RetroArch
- 1. Download "Palm OS(Mu)" from "Online Updater->Core Updater"
- 2. Go back, select "Load Core", select "Palm OS(Mu)"
- 3. Copy "palmos41-en-m515.rom" and "palmos52-en-t3.rom" to the RetroArch system directory
- 4. (Optional)Copy "bootloader-en-m515.rom" to the RetroArch system directory
- 5. Run a .prc or .img file
+
+ 1. Download "Palm OS(Mu)" from "Online Updater->Core Updater" 
+     1. Alternatively, you can install a locally compiled or
+        downloaded core from another source and place it within
+        RetroArch's `cores/` directory. If you do this, remember
+        to also install `mu_libretro.info` (which is located
+        in `libretroBuildSystem`) to the directory as well so
+        it knows which files are supported.
+ 2. Go back, select _Load Core_, select _Palm OS (Mu)_
+ 3. Copy `palmos41-en-m515.rom` to the RetroArch system directory
+    1. For experimental Palm OS 5 support: `palmos52-en-t3.rom`.
+ 4. (Optional) Copy "bootloader-en-m515.rom" to the RetroArch system directory
+ 5. Load a `.prc`, `.img`, or `.zip` file.
 
 ## Tools
+
 [Prc-tools, Palm OS SDKs, pilrc, pilot-link](https://github.com/meepingsnesroms/prc-tools-remix)
 
 ## License
