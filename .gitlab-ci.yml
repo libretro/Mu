@@ -299,8 +299,8 @@ libretro-build-rs90-odbeta-mips32:
     - .libretro-rs90-odbeta-cmake-mips32
     - .core-defs
 
-## djgpp-static-cmake.yml
-#libretro-build-djgpp: # TODO: What should this be called?
-#  extends:
-#    - .libretro-djgpp-static-cmake-retroarch-master
-#    - .core-defs
+# djgpp-static-cmake.yml
+libretro-build-djgpp: # TODO: What should this be called?
+  extends:
+    - .libretro-djgpp-static-cmake-retroarch-master
+    - .core-defs

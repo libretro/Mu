@@ -20,11 +20,18 @@ if(MU_FPIC)
 endif()
 
 # Bring all the sub-modules as needed
-target_link_libraries(MuCore
-	MuCorePxa260Experimental
-	MuCoreFileLauncher
-	MuCoreAudio
-	MuCoreM68k)
+if(MU_ARM)
+	target_link_libraries(MuCore
+		MuCorePxa260Experimental
+		MuCoreFileLauncher
+		MuCoreAudio
+		MuCoreM68k)
+else()
+	target_link_libraries(MuCore
+		MuCoreFileLauncher
+		MuCoreAudio
+		MuCoreM68k)
+endif()
 
 # Includes for the project
 target_include_directories(MuCore PUBLIC
@@ -39,5 +46,7 @@ add_subdirectory(fileLauncher)
 add_subdirectory(m68k)
 
 # Experimental ARM Cores
-add_subdirectory(armv5te)
-add_subdirectory(pxa260)
+if(MU_ARM)
+	add_subdirectory(armv5te)
+	add_subdirectory(pxa260)
+endif()

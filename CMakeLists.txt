@@ -24,6 +24,13 @@ else()
 	set(MU_FPIC ON)
 endif()
 
+# Do not include experimental ARM core for some platforms
+if(DJGPP)
+	set(MU_ARM OFF)
+else()
+	set(MU_ARM ON)
+endif()
+
 # Where should dynamic libraries go when output?
 if(NOT DEFINED MU_DYLIB_OUTPUT_DIR)
 	set(MU_DYLIB_OUTPUT_DIR
