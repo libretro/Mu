@@ -14,7 +14,8 @@ add_library(MuCorePxa260Experimental STATIC
 	pxa260Memctrl.c
 	pxa260Ssp.c
 	pxa260Timing.c
-	pxa260Udc.c)
+	pxa260Udc.c
+	tsc2101.c)
 
 # Make this position independent so it can be linked into shared libraries
 if(MU_FPIC)

@@ -167,7 +167,7 @@ support_palm_os5{
         ../../src/armv5te/mem.c \
         ../../src/armv5te/mmu.c \
         ../../src/tps65010.c \
-        ../../src/tsc2101.c \
+        ../../src/pxa260/tsc2101.c \
         ../../src/w86l488.c
 
     HEADERS += \

@@ -16,7 +16,6 @@ add_library(MuCore ${MU_CORE_BUILD_TYPE}
 	sed1376.c
 	silkscreen.c
 	tps65010.c
-	tsc2101.c
 	w86l488.c)
 
 # Make this position independent so it can be linked into shared libraries
