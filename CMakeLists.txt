@@ -25,7 +25,7 @@ else()
 endif()
 
 # Do not include experimental ARM core for some platforms
-if(DJGPP)
+if(DJGPP OR PLATFORM_PSP OR PSP)
 	set(MU_ARM OFF)
 else()
 	set(MU_ARM ON)
