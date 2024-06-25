@@ -8,8 +8,10 @@ add_library(MuCoreM68k STATIC
 	m68kops.c)
 
 # Make this position independent so it can be linked into shared libraries
-set_property(TARGET MuCoreM68k
-	PROPERTY POSITION_INDEPENDENT_CODE ON)
+if(MU_FPIC)
+	set_property(TARGET MuCoreM68k
+		PROPERTY POSITION_INDEPENDENT_CODE ON)
+endif()
 
 # Includes for the project
 target_include_directories(MuCoreM68k PUBLIC

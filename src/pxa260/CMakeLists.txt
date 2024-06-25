@@ -17,8 +17,10 @@ add_library(MuCorePxa260Experimental STATIC
 	pxa260Udc.c)
 
 # Make this position independent so it can be linked into shared libraries
-set_property(TARGET MuCorePxa260Experimental
-	PROPERTY POSITION_INDEPENDENT_CODE ON)
+if(MU_FPIC)
+	set_property(TARGET MuCorePxa260Experimental
+		PROPERTY POSITION_INDEPENDENT_CODE ON)
+endif()
 
 # Bring all the sub-modules as needed
 target_link_libraries(MuCorePxa260Experimental

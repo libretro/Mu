@@ -85,6 +85,14 @@ First install _Qt 5.14.2_, you may optionally install as well _Qt Creator_.
  * Mac: <https://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-mac-x64-5.14.2.dmg>
  * Linux: <https://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-linux-x64-5.14.2.run>
 
+You need the following components of Qt5:
+
+ * Core
+ * Gui
+ * Widgets
+ * Multimedia
+ * Svg
+
 When running _CMake_ you will need to pass `-DCMAKE_PREFIX_PATH` to the
 location of `Qt5Config.cmake`.
 

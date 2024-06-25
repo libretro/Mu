@@ -1,7 +1,7 @@
 # Only include the sub-project if Qt was actually found
-find_package(Qt5 OPTIONAL_COMPONENTS Core Widgets)
+find_package(Qt5 OPTIONAL_COMPONENTS Core Gui Widgets Multimedia Svg)
 if(Qt5_FOUND EQUAL 0)
-	message("Qt5 was not found by CMake, check readme.md!")
+	message("Qt5 or one of their components were not found, check readme.md!")
 endif()
 
 # Was this actually found now?

@@ -17,6 +17,39 @@ message("that you are resting well.")
 message(" -- Your friend, Stephanie")
 message("******************************")
 
+# Some platforms cannot use FPIC code
+if(PLATFORM_PSP OR PSP)
+	set(MU_FPIC OFF)
+else()
+	set(MU_FPIC ON)
+endif()
+
+# Where should dynamic libraries go when output?
+if(NOT DEFINED MU_DYLIB_OUTPUT_DIR)
+	set(MU_DYLIB_OUTPUT_DIR
+		"${CMAKE_BINARY_DIR}")
+endif()
+
+# Need to set specific locations for output libraries?
+# Note that RUNTIME_OUTPUT_DIRECTORY is needed for the Windows build to output
+# directories since .DLL files are output there and not where shared libraries
+# go??? No idea really.
+macro(mu_target_binary_output target where)
+	set_target_properties(${target} PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY "${where}"
+		LIBRARY_OUTPUT_DIRECTORY "${where}"
+		ARCHIVE_OUTPUT_DIRECTORY "${where}")
+
+	foreach(outputConfig ${CMAKE_CONFIGURATION_TYPES})
+		string(TOUPPER "${outputConfig}" outputConfig)
+
+		set_target_properties(${target} PROPERTIES
+			RUNTIME_OUTPUT_DIRECTORY_${outputConfig} "${where}"
+			LIBRARY_OUTPUT_DIRECTORY_${outputConfig} "${where}"
+			ARCHIVE_OUTPUT_DIRECTORY_${outputConfig} "${where}")
+	endforeach()
+endmacro()
+
 # Main project sources
 add_subdirectory(src)
 

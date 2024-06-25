@@ -23,6 +23,14 @@ target_include_directories(mu_libretro PUBLIC
 	"${PROJECT_SOURCE_DIR}/include"
 	"libretro-common/include")
 
+# Library location must be placed in the build output for the RetroArch
+# build system to pick up the library
+# Note that RUNTIME_OUTPUT_DIRECTORY is needed for the Windows build to output
+# directories since .DLL files are output there and not where shared libraries
+# go??? No idea really.
+mu_target_binary_output(mu_libretro
+	"${MU_DYLIB_OUTPUT_DIR}")
+
 # Custom launching the core, tries to find RetroArch on the system
 ## Determine RetroArch directory
 if(CMAKE_SYSTEM_NAME STREQUAL Windows)
@@ -47,4 +55,9 @@ if(DEFINED MU_LIBRETRO_DIR)
 		COMMAND "${MU_LIBRETRO_DIR}/retroarch${MU_LIBRETRO_EXTENSION}" "-v" "-L" "$<TARGET_FILE:mu_libretro>"
 		WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
 		COMMENT "Starting RetroArch with Mu")
+
+	# Do not try running this by default
+	set_target_properties(RetroArch PROPERTIES
+			EXCLUDE_FROM_ALL TRUE
+			EXCLUDE_FROM_DEFAULT_BUILD TRUE)
 endif()
