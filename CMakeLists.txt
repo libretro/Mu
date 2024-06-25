@@ -42,6 +42,13 @@ else()
 	set(MU_ARM ON)
 endif()
 
+# RetroArch must be static
+if(DJGPP OR PLATFORM_PSP OR PSP)
+	set(MU_LIBRETRO_OBJECT_LIB ON)
+else()
+	set(MU_LIBRETRO_OBJECT_LIB OFF)
+endif()
+
 # Where should dynamic libraries go when output?
 if(NOT DEFINED MU_DYLIB_OUTPUT_DIR)
 	set(MU_DYLIB_OUTPUT_DIR

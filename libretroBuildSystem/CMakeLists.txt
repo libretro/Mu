@@ -1,4 +1,11 @@
+if(MU_LIBRETRO_OBJECT_LIB)
+	set(MU_LIBRETRO_OBJECT_LIB_USE $<TARGET_OBJECTS:MuCore>)
+else()
+	set(MU_LIBRETRO_OBJECT_LIB_USE)
+endif()
+
 add_library(mu_libretro SHARED
+	${MU_LIBRETRO_OBJECT_LIB_USE}
 	libretro.c
 	cursors.c
 	miniz.c
@@ -15,8 +22,10 @@ add_library(mu_libretro SHARED
 set_target_properties(mu_libretro PROPERTIES PREFIX "")
 
 # Bring all the sub-modules as needed
-target_link_libraries(mu_libretro
-	MuCore)
+if(NOT MU_LIBRETRO_OBJECT_LIB)
+	target_link_libraries(mu_libretro
+		MuCore)
+endif()
 
 # Include the required includes
 target_include_directories(mu_libretro PUBLIC
