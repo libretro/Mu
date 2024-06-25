@@ -219,7 +219,7 @@ void cpu_int_check()
         cpu_events &= ~EVENT_FIQ;
 }
 
-static const constexpr uint8_t exc_flags[] = {
+static const uint8_t exc_flags[] = {
     MODE_SVC | 0xC0, /* Reset */
     MODE_UND | 0x80, /* Undefined instruction */
     MODE_SVC | 0x80, /* Software interrupt */

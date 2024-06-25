@@ -176,7 +176,7 @@ enum Reg : uint8_t {
 static int8_t regmap_v2p[16];
 
 /* R0 is used as scratch register. R10 is a pointer to struct arm_state, R11 contains flags. */
-static constexpr const uint8_t regmap_first_phys = R1, regmap_last_phys = R9;
+static const uint8_t regmap_first_phys = R1, regmap_last_phys = R9;
 
 /* Shortcut. If anything has been mapped, this is true.
    Set by regmap_next_preg, unset by regmap_flush. */

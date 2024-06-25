@@ -9,7 +9,7 @@ struct LiteralRef {
 	uintptr_t value;
 };
 
-static constexpr size_t MAX_LITERALS = 1024;
+static size_t MAX_LITERALS = 1024;
 static LiteralRef literals[MAX_LITERALS];
 static size_t literals_count = 0;
 
