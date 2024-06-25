@@ -3,7 +3,7 @@
 #include "armv5te/debug.h"
 #include "armv5te/disasm.h"
 #include "armv5te/emu.h"
-
+#include "armv5te/mmu.h"
 
 char disasmReturnBuf[80];
 
