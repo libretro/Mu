@@ -1,5 +1,5 @@
 # m68k Module
-add_library(MuCoreAudio STATIC
+add_library(MuCoreAudio ${MU_CORE_BUILD_TYPE}
 	blip_buf.c)
 
 # Make this position independent so it can be linked into shared libraries

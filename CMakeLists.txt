@@ -49,6 +49,12 @@ else()
 	set(MU_LIBRETRO_OBJECT_LIB OFF)
 endif()
 
+if(MU_LIBRETRO_OBJECT_LIB)
+	set(MU_CORE_BUILD_TYPE OBJECT)
+else()
+	set(MU_CORE_BUILD_TYPE STATIC)
+endif()
+
 # Where should dynamic libraries go when output?
 if(NOT DEFINED MU_DYLIB_OUTPUT_DIR)
 	set(MU_DYLIB_OUTPUT_DIR

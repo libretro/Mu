@@ -1,9 +1,3 @@
-if(MU_LIBRETRO_OBJECT_LIB)
-	set(MU_CORE_BUILD_TYPE OBJECT)
-else()
-	set(MU_CORE_BUILD_TYPE STATIC)
-endif()
-
 # Base Mu library
 add_library(MuCore ${MU_CORE_BUILD_TYPE}
 	ads7846.c

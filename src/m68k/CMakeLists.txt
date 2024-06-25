@@ -1,5 +1,5 @@
 # m68k Module
-add_library(MuCoreM68k STATIC
+add_library(MuCoreM68k ${MU_CORE_BUILD_TYPE}
 	m68kcpu.c
 	m68kdasm.c
 	m68kopac.c
