@@ -36,12 +36,12 @@ else()
 	elseif(CMAKE_SYSTEM_PROCESSOR MATCHES arm)
 		target_sources(MuCoreArmV5TEExperimental PUBLIC
 			translate_arm.cpp)
+	elseif(MU_IS_X86_32 OR CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(i386)")
+		target_sources(MuCoreArmV5TEExperimental PUBLIC
+			translate_x86.c)
 	elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86_64)|(x86-64)|(amd64)|(AMD64)")
 		target_sources(MuCoreArmV5TEExperimental PUBLIC
 			translate_x86_64.c)
-	elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(i386)")
-		target_sources(MuCoreArmV5TEExperimental PUBLIC
-			translate_x86.c)
 	endif()
 endif()
 
