@@ -23,6 +23,15 @@ target_include_directories(mu_libretro PUBLIC
 	"${PROJECT_SOURCE_DIR}/include"
 	"libretro-common/include")
 
+# Name must be specifically set for RetroArch for it to work properly
+if(ANDROID OR (DEFINED ANDROID_PLATFORM AND ANDROID_PLATFORM))
+	mu_target_binary_name(mu_libretro
+		"mu_libretro_android")
+else()
+	mu_target_binary_name(mu_libretro
+		"mu_libretro${LIBRETRO_SUFFIX}")
+endif()
+
 # Library location must be placed in the build output for the RetroArch
 # build system to pick up the library
 # Note that RUNTIME_OUTPUT_DIRECTORY is needed for the Windows build to output

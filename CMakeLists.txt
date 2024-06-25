@@ -37,6 +37,25 @@ if(NOT DEFINED MU_DYLIB_OUTPUT_DIR)
 		"${CMAKE_BINARY_DIR}")
 endif()
 
+# Force a specific name for the output resultant binary
+macro(mu_target_binary_name target what)
+	# Base properties
+	set_target_properties(${target} PROPERTIES
+		RUNTIME_OUTPUT_NAME "${what}"
+		LIBRARY_OUTPUT_NAME "${what}"
+		ARCHIVE_OUTPUT_NAME "${what}")
+
+	# Then for each configuration
+	foreach(outputConfig ${CMAKE_CONFIGURATION_TYPES})
+		string(TOUPPER "${outputConfig}" outputConfig)
+
+		set_target_properties(${target} PROPERTIES
+			RUNTIME_OUTPUT_NAME_${outputConfig} "${what}"
+			LIBRARY_OUTPUT_NAME_${outputConfig} "${what}"
+			ARCHIVE_OUTPUT_NAME_${outputConfig} "${what}")
+	endforeach()
+endmacro()
+
 # Need to set specific locations for output libraries?
 # Note that RUNTIME_OUTPUT_DIRECTORY is needed for the Windows build to output
 # directories since .DLL files are output there and not where shared libraries
