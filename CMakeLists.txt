@@ -17,15 +17,26 @@ message("that you are resting well.")
 message(" -- Your friend, Stephanie")
 message("******************************")
 
+# Is this x86_32?
+if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86" OR
+	"${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_32" OR
+	"${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i386" OR
+	"${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i486" OR
+	"${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i586" OR
+	"${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "i686" OR
+	"${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "ia32")
+	set(MU_IS_X86_32 YES)
+endif()
+
 # Some platforms cannot use FPIC code
-if(PLATFORM_PSP OR PSP)
+if(DJGPP OR PLATFORM_PSP OR PSP)
 	set(MU_FPIC OFF)
 else()
 	set(MU_FPIC ON)
 endif()
 
 # Do not include experimental ARM core for some platforms
-if(DJGPP OR PLATFORM_PSP OR PSP)
+if(DJGPP OR PLATFORM_PSP OR PSP OR (APPLE AND MU_IS_X86_32))
 	set(MU_ARM OFF)
 else()
 	set(MU_ARM ON)
