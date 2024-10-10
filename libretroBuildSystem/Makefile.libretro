@@ -126,9 +126,10 @@ else ifeq ($(platform), osx)
 ifeq ($(arch),ppc)
 		CFLAGS += -D__ppc__ -DMSB_FIRST -DWORDS_BIGENDIAN=1
 endif
-	OSXVER = $(shell sw_vers -productVersion | cut -d. -f 2)
-	OSX_LT_MAVERICKS = $(shell (( $(OSXVER) <= 9)) && echo "YES")
-	OSX_GT_MOJAVE = $(shell (( $(OSXVER) >= 14)) && echo "YES")
+	OSXMAJVER = $(shell sw_vers -productVersion | cut -d. -f 1)
+	OSXMINVER = $(shell sw_vers -productVersion | cut -d. -f 2)
+	OSX_LT_MAVERICKS = $(shell (( $(OSXMAJVER) == 10 )) && (( $(OSXMINVER) <= 9)) && echo "YES")
+	OSX_GT_MOJAVE = $(shell (( $(OSXMAJVER) > 10 )) || (( $(OSXMINVER) >= 14)) && echo "YES")
 
     ifeq ($(OSX_LT_MAVERICKS),"YES")
         fpic += -mmacosx-version-min=10.5
@@ -146,7 +147,7 @@ endif
         CFLAGS   += $(TARGET_RULE)
         CPPFLAGS += $(TARGET_RULE)
         CXXFLAGS += $(TARGET_RULE)
-        LDFLAGS  += $(TARGET_RULE)
+        LDFLAGS  += $(TARGET_RULE) -lc++
     endif
 
 # iOS
