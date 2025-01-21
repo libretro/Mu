@@ -490,8 +490,10 @@ bool loadContentFileNonSRAM(uint32_t *error, uint8_t *contentData,
 					continue;
 
 				// Not a PDB or PRC?
-				if (0 != strcasecmp((lookStage == 0 ? ".pdb" : ".prc"),
-					&stat.m_filename[fileNameLen - 4]))
+				if ((0 != strcasecmp((lookStage == 0 ? ".pdb" : ".prc"),
+					&stat.m_filename[fileNameLen - 4])) ||
+					(0 != strcasecmp((lookStage == 0 ? ".PDB" : ".PRC"),
+					&stat.m_filename[fileNameLen - 4])))
 					continue;
 
 				// Allocate buffer for the data
@@ -506,8 +508,8 @@ bool loadContentFileNonSRAM(uint32_t *error, uint8_t *contentData,
 					0, NULL, 0))
 				{
 					// Notice
-					log_cb(RETRO_LOG_INFO, "Installing from ZIP: %s\n",
-						stat.m_filename);
+					log_cb(RETRO_LOG_INFO,
+						"Installing from ZIP: %s\n", stat.m_filename);
 
 					// Install the file
 					newError = launcherInstallFile(entryBuf,
