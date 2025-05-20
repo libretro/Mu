@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.13)
 project(Mu
-	VERSION 1.3.2
+	VERSION 1.3.3
 	DESCRIPTION "Classic Palm OS Emulator."
 	HOMEPAGE_URL https://github.com/libretro/Mu
 	LANGUAGES C CXX)
