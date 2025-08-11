@@ -171,50 +171,50 @@ support_palm_os5{
         ../../src/w86l488.c
 
     HEADERS += \
-        ../../src/pxa260/pxa260_CPU.h \
-        ../../src/pxa260/pxa260_DMA.h \
-        ../../src/pxa260/pxa260_DSP.h \
-        ../../src/pxa260/pxa260_GPIO.h \
-        ../../src/pxa260/pxa260_IC.h \
-        ../../src/pxa260/pxa260_LCD.h \
-        ../../src/pxa260/pxa260_PwrClk.h \
-        ../../src/pxa260/pxa260_RTC.h \
-        ../../src/pxa260/pxa260_TIMR.h \
-        ../../src/pxa260/pxa260_UART.h \
-        ../../src/pxa260/pxa260I2c.h \
-        ../../src/pxa260/pxa260Memctrl.h \
-        ../../src/pxa260/pxa260Timing.h \
-        ../../src/pxa260/pxa260Ssp.h \
-        ../../src/pxa260/pxa260Udc.h \
-        ../../src/pxa260/pxa260_types.h \
-        ../../src/pxa260/pxa260_math64.h \
-        ../../src/pxa260/pxa260Accessors.c.h \
-        ../../src/pxa260/pxa260.h \
-        ../../src/armv5te/os/os.h \
-        ../../src/armv5te/uArm/CPU_2.h \
-        ../../src/armv5te/uArm/icache.h \
-        ../../src/armv5te/uArm/uArmGlue.h \
-        ../../src/armv5te/asmcode.h \
-        ../../src/armv5te/bitfield.h \
-        ../../src/armv5te/cpu.h \
-        ../../src/armv5te/disasm.h \
-        ../../src/armv5te/emu.h \
-        ../../src/armv5te/mem.h \
-        ../../src/armv5te/translate.h \
-        ../../src/armv5te/cpudefs.h \
-        ../../src/armv5te/debug.h \
-        ../../src/armv5te/mmu.h \
-        ../../src/armv5te/armsnippets.h \
-        ../../src/armv5te/literalpool.h \
-        ../../src/tungstenT3Bus.h \
-        ../../src/tps65010.h \
-        ../../src/tsc2101.h \
-        ../../src/w86l488.h
+        ../../include/pxa260/pxa260_CPU.h \
+        ../../include/pxa260/pxa260_DMA.h \
+        ../../include/pxa260/pxa260_DSP.h \
+        ../../include/pxa260/pxa260_GPIO.h \
+        ../../include/pxa260/pxa260_IC.h \
+        ../../include/pxa260/pxa260_LCD.h \
+        ../../include/pxa260/pxa260_PwrClk.h \
+        ../../include/pxa260/pxa260_RTC.h \
+        ../../include/pxa260/pxa260_TIMR.h \
+        ../../include/pxa260/pxa260_UART.h \
+        ../../include/pxa260/pxa260I2c.h \
+        ../../include/pxa260/pxa260Memctrl.h \
+        ../../include/pxa260/pxa260Timing.h \
+        ../../include/pxa260/pxa260Ssp.h \
+        ../../include/pxa260/pxa260Udc.h \
+        ../../include/pxa260/pxa260_types.h \
+        ../../include/pxa260/pxa260_math64.h \
+        ../../include/pxa260/pxa260Accessors.c.h \
+        ../../include/pxa260/pxa260.h \
+        ../../include/armv5te/os/os.h \
+        ../../include/armv5te/uArm/CPU_2.h \
+        ../../include/armv5te/uArm/icache.h \
+        ../../include/armv5te/uArm/uArmGlue.h \
+        ../../include/armv5te/asmcode.h \
+        ../../include/armv5te/bitfield.h \
+        ../../include/armv5te/cpu.h \
+        ../../include/armv5te/disasm.h \
+        ../../include/armv5te/emu.h \
+        ../../include/armv5te/mem.h \
+        ../../include/armv5te/translate.h \
+        ../../include/armv5te/cpudefs.h \
+        ../../include/armv5te/debug.h \
+        ../../include/armv5te/mmu.h \
+        ../../include/armv5te/armsnippets.h \
+        ../../include/armv5te/literalpool.h \
+        ../../include/tungstenT3Bus.h \
+        ../../include/tps65010.h \
+        ../../include/tsc2101.h \
+        ../../include/w86l488.h
 }
 
 CONFIG += c++11
 
-INCLUDEPATH += $$PWD/qt-common/include
+INCLUDEPATH += $$PWD/../../include
 
 SOURCES += \
     ../../src/ads7846.c \
@@ -243,32 +243,32 @@ SOURCES += \
     settingsmanager.cpp
 
 HEADERS += \
-    ../../src/ads7846.h \
-    ../../src/audio/blip_buf.h \
-    ../../src/dbvz.h \
-    ../../src/dbvzRegisterAccessors.c.h \
-    ../../src/dbvzRegisterNames.c.h \
-    ../../src/dbvzTiming.c.h \
-    ../../src/emulator.h \
-    ../../src/fileLauncher/launcher.h \
-    ../../src/flx68000.h \
-    ../../src/m5XXBus.h \
-    ../../src/m68k/m68k.h \
-    ../../src/m68k/m68kconf.h \
-    ../../src/m68k/m68kcpu.h \
-    ../../src/m68k/m68kexternal.h \
-    ../../src/m68k/m68kops.h \
-    ../../src/pdiUsbD12.h \
-    ../../src/pdiUsbD12CommandNames.c.h \
-    ../../src/portability.h \
-    ../../src/sdCard.h \
-    ../../src/sdCardAccessors.c.h \
-    ../../src/sdCardCommandNames.c.h \
-    ../../src/sdCardCrcTables.c.h \
-    ../../src/sed1376.h \
-    ../../src/sed1376Accessors.c.h \
-    ../../src/sed1376RegisterNames.c.h \
-    ../../src/silkscreen.h \
+    ../../include/ads7846.h \
+    ../../include/audio/blip_buf.h \
+    ../../include/dbvz.h \
+    ../../include/dbvzRegisterAccessors.c.h \
+    ../../include/dbvzRegisterNames.c.h \
+    ../../include/dbvzTiming.c.h \
+    ../../include/emulator.h \
+    ../../include/fileLauncher/launcher.h \
+    ../../include/flx68000.h \
+    ../../include/m5XXBus.h \
+    ../../include/m68k/m68k.h \
+    ../../include/m68k/m68kconf.h \
+    ../../include/m68k/m68kcpu.h \
+    ../../include/m68k/m68kexternal.h \
+    ../../include/m68k/m68kops.h \
+    ../../include/pdiUsbD12.h \
+    ../../include/pdiUsbD12CommandNames.c.h \
+    ../../include/portability.h \
+    ../../include/sdCard.h \
+    ../../include/sdCardAccessors.c.h \
+    ../../include/sdCardCommandNames.c.h \
+    ../../include/sdCardCrcTables.c.h \
+    ../../include/sed1376.h \
+    ../../include/sed1376Accessors.c.h \
+    ../../include/sed1376RegisterNames.c.h \
+    ../../include/silkscreen.h \
     debugviewer.h \
     emuwrapper.h \
     mainwindow.h \
