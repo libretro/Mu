@@ -297,7 +297,7 @@ void retro_set_environment(retro_environment_t cb){
 }
 
 void retro_set_audio_sample(retro_audio_sample_t cb){
-   
+
 }
 
 void retro_set_audio_sample_batch(retro_audio_sample_batch_t cb){
@@ -318,6 +318,66 @@ void retro_set_video_refresh(retro_video_refresh_t cb){
 
 void retro_reset(void){
    emulatorSoftReset();
+}
+
+/**
+ * Animation to play when the device is asleep.
+ *
+ * @param video_cb The output callback.
+ * @param width The width of the framebuffer.
+ * @param height The height of the framebuffer.
+ * @return If the sleep animation was successful.
+ * @since 2025/08/11
+ */
+static bool sleepAnimation(retro_video_refresh_t video_cb,
+                           int32_t width, int32_t height) {
+	static int32_t bump;
+	uint16_t* buf;
+	uint16_t color;
+	size_t bufLen, area;
+	int32_t point;
+
+	// Allocate buffer to render
+	area = width * height;
+	bufLen = area * sizeof(uint16_t);
+	buf = alloca(bufLen);
+	if (buf == NULL) {
+		return false;
+	}
+
+	// Wipe everything
+	memset(buf, 0, bufLen);
+
+	if (palmMisc.greenLed) {
+		color = 0x01F1;
+	} else {
+		color = 0xFFFF;
+
+#if defined(EMU_SUPPORT_PALM_OS5)
+		if (palmMisc.redLed) {
+			color = 0xF700;
+		}
+#endif
+	}
+
+	// Set a "random" pixel to the color
+	point = (int32_t)palmCycleCounter + palmClockMultiplier +
+		palmMisc.dataPort + palmSdCard.responseReadPositionBit + (++bump);
+	if (point < 0)
+		point = -point;
+	point %= width * 2;
+	if (point >= width) {
+		point = width - (point - width);
+	}
+
+	// Set color
+	buf[point] = color;
+
+	// Render the buffer
+	video_cb(buf,
+		width, height, width * sizeof(uint16_t));
+
+	return true;
 }
 
 void retro_run(void){
@@ -415,9 +475,22 @@ void retro_run(void){
    //draw mouse
    if(useJoystickAsMouse)
       renderMouseCursor(touchCursorX, touchCursorY);
-   
-   video_cb(palmFramebuffer, palmFramebufferWidth, screenYEnd, palmFramebufferWidth * sizeof(uint16_t));
+
+	// If the LCD is off, try an animation
+	if (palmMisc.lcdOn == false) {
+		if (!sleepAnimation(video_cb, palmFramebufferWidth, screenYEnd)) {
+			video_cb(palmFramebuffer,
+				palmFramebufferWidth, screenYEnd,
+				palmFramebufferWidth * sizeof(uint16_t));
+		}
+	} else {
+		video_cb(palmFramebuffer,
+			palmFramebufferWidth, screenYEnd,
+			palmFramebufferWidth * sizeof(uint16_t));
+	}
+
    audio_cb(palmAudio, AUDIO_SAMPLES_PER_FRAME);
+
    if(led_cb){
       led_cb(0, palmMisc.greenLed);
 #if defined(EMU_SUPPORT_PALM_OS5)
@@ -715,10 +788,11 @@ bool retro_load_game(const struct retro_game_info *info){
    strlcat(saveRamPath, ".ram", PATH_MAX_LENGTH);
    saveRamFile = filestream_open(saveRamPath, RETRO_VFS_FILE_ACCESS_READ, RETRO_VFS_FILE_ACCESS_HINT_NONE);
 
-   // There is now always SRAM because it gets initialized to garbage
-   hasSram = true;
-
+   // Load SRAM from the RAM file (save state), if it happens to fail or
+   // none was loaded then memory has just been filled with garbage
    if(saveRamFile) {
+   	  hasSram = true;
+
       if(filestream_get_size(saveRamFile) == emulatorGetRamSize()){
          filestream_read(saveRamFile, palmRam, emulatorGetRamSize());
          swap16BufferIfLittle(palmRam, emulatorGetRamSize() / sizeof(uint16_t));
