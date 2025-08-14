@@ -8,6 +8,10 @@
 #include <stdbool.h>
 #include <time.h>
 
+#if defined(_MSC_VER)
+ #include <malloc.h>
+#endif
+
 #include <compat/strl.h>
 #include <retro_miscellaneous.h>
 #include <streams/file_stream.h>
@@ -340,7 +344,11 @@ static bool sleepAnimation(retro_video_refresh_t video_cb,
 	// Allocate buffer to render
 	area = width * height;
 	bufLen = area * sizeof(uint16_t);
+#if defined(_MSC_VER)
+	buf = _alloca(bufLen);
+#else
 	buf = alloca(bufLen);
+#endif
 	if (buf == NULL) {
 		return false;
 	}
