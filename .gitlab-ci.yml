@@ -45,6 +45,8 @@ include:
   - project: 'libretro-infrastructure/ci-templates'
     file: '/linux-x64.yml'
   - project: 'libretro-infrastructure/ci-templates'
+    file: '/linux-aarch64.yml'
+  - project: 'libretro-infrastructure/ci-templates'
     file: '/ngc-static-cmake.yml'
   - project: 'libretro-infrastructure/ci-templates'
     file: '/ngc-static.yml'
@@ -148,6 +150,12 @@ libretro-build-linux-i686:
 libretro-build-linux-x64:
   extends:
     - .libretro-linux-x64-make-default
+    - .core-defs
+
+# Linux 64-bit (ARM)
+libretro-build-linux-aarch64:
+  extends:
+    - .libretro-linux-aarch64-make-default
     - .core-defs
 
 # MacOS 64-bit
