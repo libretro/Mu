@@ -98,6 +98,8 @@ include:
     file: '/windows-x64-mingw.yml'
   - project: 'libretro-infrastructure/ci-templates'
     file: '/windows-x64-msvc10-msys2.yml'
+  - project: 'libretro-infrastructure/ci-templates'
+    file: '/webos-make.yml'
 
 # Stages for building
 stages:
@@ -311,4 +313,11 @@ libretro-build-rs90-odbeta-mips32:
 libretro-build-djgpp: # TODO: What should this be called?
   extends:
     - .libretro-djgpp-static-cmake-retroarch-master
+    - .core-defs
+
+#################################### MISC ####################################
+# webOS 32-bit
+libretro-build-webos-armv7a:
+  extends:
+    - .libretro-webos-armv7a-make-default
     - .core-defs
